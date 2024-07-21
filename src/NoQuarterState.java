@@ -22,6 +22,11 @@ public class NoQuarterState implements State {
     }
 
     @Override
+    public void choose(String flavor) {
+        System.out.println("You can't choose, you must insert a quarter first");
+    }
+
+    @Override
     public void turnCrank() {
         System.out.println("You turned, but there's no quarter");
     }

@@ -3,16 +3,19 @@
  * ID:      6510450968
  */
 
-public class HasQuarterState implements State {
+import java.util.Random;
+
+public class ChosenState implements State {
+    Random randomWinner = new Random(System.currentTimeMillis());
     GumballMachine gumballMachine;
 
-    public HasQuarterState(GumballMachine gumballMachine) {
+    public ChosenState(GumballMachine gumballMachine) {
         this.gumballMachine = gumballMachine;
     }
 
     @Override
     public void insertQuarter() {
-        System.out.println("You can't insert another quarter");
+        System.out.println("Sorry, you already inserted a quarter");
     }
 
     @Override
@@ -24,12 +27,17 @@ public class HasQuarterState implements State {
     @Override
     public void choose(String flavor) {
         gumballMachine.setFlavor(flavor);
-        gumballMachine.setState(gumballMachine.getChosenState());
     }
 
     @Override
     public void turnCrank() {
-        System.out.println("You have to choose the flavor first");
+        System.out.println("You turned...");
+        int winner = randomWinner.nextInt(10);
+        if ((winner == 0) && (gumballMachine.getCount() > 1)) {
+            gumballMachine.setState(gumballMachine.getWinnerState());
+        } else {
+            gumballMachine.setState(gumballMachine.getSoldState());
+        }
     }
 
     @Override
